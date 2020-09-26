@@ -1,6 +1,7 @@
 from datetime import datetime
 import calendar
 
+
 class BudgetService(object):
     def query(self, start, end):
         if start > end:
@@ -15,8 +16,6 @@ class BudgetService(object):
             budget_datetime = datetime.strptime(budget.yearMonth, "%Y%m")
             budget_day = calendar.monthrange(budget_datetime.year, budget_datetime.month)[1]
 
-
-
             if self.is_same_year_month(budget_datetime, start):
                 if self.is_same_year_month(budget_datetime, end):
                     amount += round(budget.amount * (end.day - start.day + 1) / budget_day, 2)
@@ -27,7 +26,7 @@ class BudgetService(object):
                 amount += budget.amount
 
             if self.is_same_year_month(budget_datetime, end):
-                amount += round(budget.amount * end.day  / budget_day, 2)
+                amount += round(budget.amount * end.day / budget_day, 2)
 
         return amount
 
