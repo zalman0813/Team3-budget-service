@@ -15,11 +15,12 @@ class BudgetService(object):
             budget_datetime = datetime.strptime(budget.yearMonth, "%Y%m")
             budget_day = calendar.monthrange(budget_datetime.year, budget_datetime.month)[1]
 
-            if self.is_same_year_month(budget_datetime, start) and self.is_same_year_month(budget_datetime, end):
-                amount += round(budget.amount*(end.day - start.day + 1)/budget_day, 2)
-                return amount
+
 
             if self.is_same_year_month(budget_datetime, start):
+                if self.is_same_year_month(budget_datetime, end):
+                    amount += round(budget.amount * (end.day - start.day + 1) / budget_day, 2)
+                    return amount
                 amount += round(budget.amount * (budget_day - start.day + 1) / budget_day, 2)
 
             if self.is_in_period(begin_month, budget, end_month):
