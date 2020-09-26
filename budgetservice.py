@@ -5,15 +5,11 @@ class BudgetService(object):
     def query(self, start, end):
         if start > end:
             return 0
-        start_month_end = calendar.monthrange(start.year, start.month)[1]
-
-
 
         begin_month = datetime.strftime(start, "%Y%m")
         end_month = datetime.strftime(end, "%Y%m")
 
         budgetsList = self.get_budgets()
-
         amount = 0
         for budget in budgetsList:
             budget_datetime = datetime.strptime(budget.yearMonth, "%Y%m")
@@ -23,8 +19,8 @@ class BudgetService(object):
                 amount += round(budget.amount*(end.day - start.day + 1)/budget_day, 2)
                 return amount
 
-            if budget_datetime.year == start.year and budget_datetime.month == start.month:
-                amount += round(budget.amount * (budget_day- start.day + 1) / budget_day,2)
+            if self.is_same_year_month(budget_datetime, start):
+                amount += round(budget.amount * (budget_day - start.day + 1) / budget_day, 2)
 
             if budget.yearMonth > begin_month and budget.yearMonth < end_month:
                 amount += budget.amount
@@ -36,7 +32,9 @@ class BudgetService(object):
 
 
 
+    def is_same_year_month(self, budget_datetime, start):
+        month = budget_datetime.year == start.year and budget_datetime.month == start.month
+        return month
 
-        return 0
     def get_budgets(self):
         pass
