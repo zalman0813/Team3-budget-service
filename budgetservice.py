@@ -40,3 +40,10 @@ class BudgetService(object):
 
     def get_budgets(self):
         pass
+
+
+class Budget(object):
+
+    def __init__(self, yearMonth, amount):
+        self.yearMonth = yearMonth
+        self.amount = amount

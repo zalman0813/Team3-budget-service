@@ -3,14 +3,8 @@ from datetime import datetime
 
 from unittest.mock import patch
 
-from budgetservice import BudgetService
+from budgetservice import BudgetService, Budget
 
-
-class Budget(object):
-
-    def __init__(self, yearMonth, amount):
-        self.yearMonth = yearMonth
-        self.amount = amount
 
 class BudgetServiceTests(unittest.TestCase):
 
@@ -51,6 +45,7 @@ class BudgetServiceTests(unittest.TestCase):
             Budget('202010', 310),
         ]
         self.assertEqual(self.service.query(datetime(2020, 9, 30), datetime(2020, 10, 2)), 21)
+
     def test_over_three_month(self):
         self.fake_get_budgets.return_value = [
             Budget('202009', 30),
